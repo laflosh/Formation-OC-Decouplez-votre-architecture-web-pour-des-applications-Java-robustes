@@ -1,20 +1,20 @@
 package com.airbusiness.airbusiness_mvc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.airbusiness.airbusiness_mvc.entities.MaintenanceIssue;
 import com.airbusiness.airbusiness_mvc.repository.MaintenanceRepository;
 
 import jakarta.validation.Valid;
 
-@RestController
+@Controller
 public class MaintenanceController {
 	
 	@Autowired
@@ -67,6 +67,12 @@ public class MaintenanceController {
         maintenanceRepository.delete(maintenance);
         model.addAttribute("maintenance", maintenanceRepository.findAll());
         return "maintenance";
+    }
+    
+    @RequestMapping("/maintenance/unfixed")
+    public String unFixed( Model model) {
+       model.addAttribute("maintenance", maintenanceRepository.findByFixed(""));
+       return "maintenance";
     }
     
 }
